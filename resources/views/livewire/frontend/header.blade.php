@@ -1,126 +1,113 @@
 <!-- resources/views/livewire/frontend/header.blade.php -->
-<header class="relative wrapper bg-[#f3f8f5] pb-8">
-  <nav class="navbar navbar-expand-lg extended extended-alt navbar-light !bg-[#ffffff] lg:[background:0_0!important] xl:[background:0_0!important]">
-    <div class="container xl:flex-col lg:flex-col">
-      <div class="topbar flex flex-row lg:!justify-center xl:!justify-center items-center">
-        <div class="navbar-brand">
-          <a href="{{ route('home') }}">
-            <img src="{{ asset('assets/img/logo-dark.png') }}" srcset="{{ asset('assets/img/logo-dark@2x.png') }} 2x" alt="{{ config('app.name') }}">
-          </a>
-        </div>
+<header class="relative wrapper !bg-[#f2f3fb]">
+  <!-- Optional Alert Bar (bisa dikonfigurasi dari settings) -->
+  @if(config('app.show_alert_bar', false))
+  <div class="alert !bg-[#747ed1] !text-white fade show !rounded-none !border-0 !mb-1 !text-center" role="alert">
+    <div class="container">
+      <div class="alert-inner flex justify-center items-center !p-0">
+        <p class="!mb-0">{{ config('app.alert_message', 'Special announcement here') }}</p>
       </div>
-      <!-- /.flex -->
-      <div class="navbar-collapse-wrapper bg-[rgba(255,255,255)] opacity-100 flex flex-row items-center justify-between">
-        <div class="navbar-other w-full hidden lg:block xl:block">
-          <nav class="nav social social-muted">
-            <a class="m-[0_.7rem_0_0] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]" href="#"><i class="uil uil-twitter before:content-['\ed59'] text-[1rem] text-[#5daed5]"></i></a>
-            <a class="m-[0_.7rem_0_0] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]" href="#"><i class="uil uil-facebook-f before:content-['\eae2'] text-[1rem] text-[#4470cf]"></i></a>
-            <a class="m-[0_.7rem_0_0] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 hover:translate-y-[-0.15rem]" href="#"><i class="uil uil-instagram before:content-['\eb9c'] text-[1rem] text-[#d53581]"></i></a>
-          </nav>
-          <!-- /.social -->
+    </div>
+  </div>
+  @endif
+  
+  <nav class="navbar navbar-expand-lg center-nav transparent navbar-light">
+    <div class="container xl:flex-row lg:flex-row !flex-nowrap items-center">
+      
+      <!-- Logo Section -->
+      <div class="navbar-brand w-full">
+        <a href="{{ route('home') }}" class="flex items-center">
+          <img src="{{ $logoUrl }}" 
+               alt="{{ $brandName }}"
+               class="h-auto w-auto max-w-[120px] transition-all duration-300 object-contain"
+               style="max-height: {{ $logoHeight }}; max-width: 120px;"
+               onerror="this.onerror=null; this.src='{{ asset('assets/img/logo-dark.png') }}';">
+          
+          <!-- Optional: Show brand name next to logo on larger screens -->
+          @if(config('app.show_brand_name', false))
+            <span class="ml-3 text-xl font-bold text-gray-800 hidden md:block">
+              {{ $brandName }}
+            </span>
+          @endif
+        </a>
+      </div>
+      
+      <!-- Navigation Menu -->
+      <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
+        <div class="offcanvas-header xl:hidden lg:hidden flex items-center justify-between flex-row p-6">
+          <h3 class="text-white xl:text-[1.5rem] !text-[calc(1.275rem_+_0.3vw)] !mb-0">{{ $brandName }}</h3>
+          <button type="button"
+            class="btn-close btn-close-white mr-[-0.75rem] m-0 p-0 leading-none text-[#343f52] transition-all duration-[0.2s] ease-in-out border-0 motion-reduce:transition-none before:text-[1.05rem] before:content-['\ed3b'] before:w-[1.8rem] before:h-[1.8rem] before:leading-[1.8rem] before:shadow-none before:transition-[background] before:duration-[0.2s] before:ease-in-out before:flex before:justify-center before:items-center before:m-0 before:p-0 before:rounded-[100%] hover:no-underline bg-inherit before:bg-[rgba(255,255,255,.08)] before:font-Unicons hover:before:bg-[rgba(0,0,0,.11)] focus:outline-0"
+            data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <!-- /.navbar-other -->
-        <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
-          <div class="offcanvas-header xl:hidden lg:hidden flex items-center justify-between flex-row p-6">
-            <h3 class="text-white xl:text-[1.5rem] !text-[calc(1.275rem_+_0.3vw)] !mb-0">{{ config('app.name') }}</h3>
-            <button type="button" class="btn-close btn-close-white mr-[-0.75rem] m-0 p-0 leading-none text-[#343f52] transition-all duration-[0.2s] ease-in-out border-0 motion-reduce:transition-none before:text-[1.05rem] before:content-['\ed3b'] before:w-[1.8rem] before:h-[1.8rem] before:leading-[1.8rem] before:shadow-none before:transition-[background] before:duration-[0.2s] before:ease-in-out before:flex before:justify-center before:items-center before:m-0 before:p-0 before:rounded-[100%] hover:no-underline bg-inherit before:bg-[rgba(255,255,255,.08)] before:font-Unicons hover:before:bg-[rgba(0,0,0,.11)] focus:outline-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body flex flex-col !h-full">
+        
+        <div class="offcanvas-body xl:!ml-auto lg:!ml-auto flex flex-col !h-full">
           <ul class="navbar-nav">
-  <li class="nav-item">
-    <a class="nav-link hover:!text-[#fab758] {{ request()->routeIs('home') ? 'active text-[#fab758]' : '' }}" 
-       href="{{ route('home') }}">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link hover:!text-[#fab758] {{ request()->routeIs('products') || request()->routeIs('products.show') ? 'active text-[#fab758]' : '' }}" 
-       href="{{ route('products') }}">Products</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link hover:!text-[#fab758] {{ request()->routeIs('products') || request()->routeIs('products.show') ? 'active text-[#fab758]' : '' }}" 
-       href="{{ route('blog') }}">News</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link hover:!text-[#fab758] {{ request()->routeIs('about') ? 'active text-[#fab758]' : '' }}" 
-       href="{{ route('about') }}">About Us</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link hover:!text-[#fab758] {{ request()->routeIs('contact') ? 'active text-[#fab758]' : '' }}" 
-       href="{{ route('contact') }}">Contact</a>
-  </li>
-</ul>
-            <!-- /.navbar-nav -->
+            @foreach($navigationItems as $item)
+              <li class="nav-item">
+                <a class="nav-link font-bold tracking-[-0.01rem] hover:!text-[#fab758] {{ $item['active'] ? 'active !text-[#fab758]' : '' }}" 
+                   href="{{ $item['url'] }}">
+                   {{ $item['name'] }}
+                </a>
+              </li>
+            @endforeach
+            
+            <!-- Products dengan Dropdown jika ada kategori -->
+            @if($productCategories->count() > 0)
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle font-bold tracking-[-0.01rem] hover:!text-[#fab758] {{ request()->routeIs('products*') ? 'active !text-[#fab758]' : '' }}" 
+                 href="#" data-bs-toggle="dropdown">Products</a>
+              <ul class="dropdown-menu">
+                @foreach($productCategories as $category)
+                  <li class="nav-item">
+                    <a class="dropdown-item hover:!text-[#fab758]" 
+                       href="{{ route('products.category', $category->slug) }}">
+                       {{ $category->name }}
+                    </a>
+                  </li>
+                @endforeach
+                <li class="nav-item">
+                  <a class="dropdown-item hover:!text-[#fab758]" 
+                     href="{{ route('products') }}">
+                     View All Products
+                  </a>
+                </li>
+              </ul>
+            </li>
+            @endif
+          </ul>
+          
+          <!-- Mobile Footer -->
           <div class="offcanvas-footer xl:hidden lg:hidden">
             <div>
-              <a href="mailto:info@yourcompany.com" class="link-inverse">info@yourcompany.com</a>
-              <br> +1 (234) 567-8900 <br>
+              <a href="mailto:{{ $contactInfo['email'] }}" class="link-inverse">{{ $contactInfo['email'] }}</a>
+              <br> {{ $contactInfo['phone'] }} <br>
               <nav class="nav social social-white mt-4">
-              <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i></a>
-              <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i></a>
-              <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i></a>
+                @foreach($socialLinks as $social)
+                  <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" 
+                     href="{{ $social['url'] }}">
+                     <i class="uil {{ $social['icon'] }} before:content-['\ed59'] !text-white text-[1rem]"></i>
+                  </a>
+                @endforeach
               </nav>
-              <!-- /.social -->
             </div>
           </div>
-            <!-- /.offcanvas-footer -->
-          </div>
         </div>
-        <!-- /.navbar-collapse -->
-        <div class="navbar-other w-full flex">
-          <ul class="navbar-nav !flex-row !items-center !ml-auto">
-            <li class="nav-item"><a class="nav-link hover:!text-[#fab758] focus:!text-[#fab758]" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-info"><i class="uil uil-info-circle before:content-['\eb99'] !text-[1.1rem]"></i></a></li>
-            <li class="nav-item xl:hidden lg:hidden">
-              <button class="hamburger offcanvas-nav-btn"><span></span></button>
-            </li>
-          </ul>
-          <!-- /.navbar-nav -->
-        </div>
-        <!-- /.navbar-other -->
       </div>
-      <!-- /.navbar-collapse-wrapper -->
-    </div>
-    <!-- /.container -->
-  </nav>
-  <!-- /.navbar -->
-  
-  <div class="offcanvas offcanvas-end text-inverse !text-[#cacaca] opacity-100" id="offcanvas-info" data-bs-scroll="true">
-    <div class="offcanvas-header flex flex-row items-center justify-between p-[1.5rem]">
-      <h3 class="text-white xl:!text-[1.5rem] text-[calc(1.275rem_+_0.3vw)] !leading-[1.4] mb-0">{{ config('app.name') }}</h3>
-      <button type="button" class="btn-close btn-close-white mr-[-0.5rem] m-0 p-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body !pb-[1.5rem]">
-      <div class="widget mb-8">
-        <p>Your trusted partner for international trade with premium products.</p>
-      </div>
-      <!-- /.widget -->
-      <div class="widget mb-8">
-        <h4 class="widget-title text-white mb-[0.75rem] !text-[1rem] tracking-[normal] font-semibold !leading-[1.45]">Contact Info</h4>
-        <address class="not-italic leading-[inherit] mb-[1rem]">123 Export Street<br>Your City, Country</address>
-        <a class="text-[#cacaca] hover:!text-[#fab758]" href="mailto:info@yourcompany.com">info@yourcompany.com</a><br> +1 (234) 567-8900
-      </div>
-      <!-- /.widget -->
-      <div class="widget mb-8">
-        <h4 class="widget-title text-white mb-[0.75rem] !text-[1rem] tracking-[normal] font-semibold !leading-[1.45]">Learn More</h4>
-        <ul class="list-unstyled pl-0">
-          <li><a class="text-[#cacaca] hover:!text-[#fab758]" href="{{ route('about') }}">Our Story</a></li>
-          <li class="mt-[.35rem]"><a class="text-[#cacaca] hover:!text-[#fab758]" href="#">Terms of Use</a></li>
-          <li class="mt-[.35rem]"><a class="text-[#cacaca] hover:!text-[#fab758]" href="#">Privacy Policy</a></li>
-          <li class="mt-[.35rem]"><a class="text-[#cacaca] hover:!text-[#fab758]" href="{{ route('contact') }}">Contact Us</a></li>
+      
+      <!-- Right Side Actions -->
+      <div class="navbar-other w-full !flex !ml-auto">
+        <ul class="navbar-nav !flex-row !items-center !ml-auto">
+          <li class="nav-item hidden xl:block lg:block md:block">
+            <a href="{{ route('contact') }}"
+              class="btn btn-yellow text-white !bg-[#fab758] border-[#fab758] hover:text-white hover:bg-[#fab758] hover:border-[#fab758] focus:shadow-[rgba(250,183,88,0.5)] active:text-white active:bg-[#fab758] active:border-[#fab758] disabled:text-white disabled:bg-[#fab758] disabled:border-[#fab758] !rounded-[50rem]">Get
+              Quote</a>
+          </li>
+          <li class="nav-item xl:hidden lg:hidden">
+            <button class="hamburger offcanvas-nav-btn"><span></span></button>
+          </li>
         </ul>
       </div>
-      <!-- /.widget -->
-      <div class="widget">
-        <h4 class="widget-title text-white mb-[0.75rem] !text-[1rem] tracking-[normal] font-semibold !leading-[1.45]">Follow Us</h4>
-        <nav class="nav social social-white">
-          <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-twitter before:content-['\ed59'] !text-white text-[1rem]"></i></a>
-          <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-facebook-f before:content-['\eae2'] !text-white text-[1rem]"></i></a>
-          <a class="text-[#cacaca] text-[1rem] transition-all duration-[0.2s] ease-in-out translate-y-0 motion-reduce:transition-none hover:translate-y-[-0.15rem] m-[0_.7rem_0_0]" href="#"><i class="uil uil-instagram before:content-['\eb9c'] !text-white text-[1rem]"></i></a>
-        </nav>
-        <!-- /.social -->
-      </div>
-      <!-- /.widget -->
     </div>
-    <!-- /.offcanvas-body -->
-  </div>
-  <!-- /.offcanvas -->
+  </nav>
 </header>
-<!-- /header -->

@@ -94,12 +94,12 @@
     <div class="grow shrink-0">
         <!-- Header -->
         
-
+        @livewire('frontend.header')
         <!-- Main Content -->
         {{ $slot }}
 
         <!-- Footer -->
-        <livewire:frontend.footer />
+        @livewire('frontend.footer')
     </div>
 
     <!-- progress wrapper -->

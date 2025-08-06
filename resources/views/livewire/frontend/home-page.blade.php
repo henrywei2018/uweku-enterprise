@@ -1,63 +1,140 @@
 <!-- resources/views/livewire/frontend/home-page.blade.php -->
 <div class="bg-[#f3f8f5]">
     <!-- Hero Section -->
-    <section class="section-frame xl:mx-6 xl:rounded-[1rem] lg:mx-6 lg:rounded-[1rem] md:mx-6 md:rounded-[1rem] xxl:!mx-12 overflow-hidden opacity-100">
-      <div class="swiper-container swiper-thumbs-container swiper-fullscreen nav-dark relative z-10" data-margin="0" data-autoplay="true" data-autoplaytime="7000" data-nav="true" data-dots="false" data-items="1" data-thumbs="true">
-        <div class="swiper">
-        <div class="swiper-wrapper">
-                @foreach($banners as $banner)
-                <div class="swiper-slide bg-[#ecedef] opacity-100 bg-image !bg-cover !bg-[center_center] before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 " 
-                     @if($banner->getMedia('banner')->count() > 0)
-                         data-image-src="{{ $banner->getFirstMediaUrl('banner') }}"
-                     @elseif($banner->image_url)
-                         data-image-src="{{ $banner->image_url }}"
-                     @else
-                         data-image-src="./assets/img/photos/bg28.jpg"
-                     @endif
-                >
-                </div>
-                @endforeach
-            </div>
-          <!--/.swiper-wrapper -->
-        </div>
-        <!-- /.swiper -->
-        <div class="swiper swiper-thumbs">
-        <div class="swiper-wrapper">
-                @foreach($banners as $banner)
-                <div class="swiper-slide">
-                    @if($banner->getMedia('banner')->count() > 0)
-                        <img src="{{ $banner->getFirstMediaUrl('banner', 'preview') }}" alt="{{ $banner->title }}">
-                    @elseif($banner->image_url)
-                        <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}">
-                    @else
-                        <img src="./assets/img/photos/bg28-th.jpg" alt="thumbnail">
-                    @endif
-                </div>
-                @endforeach
-            </div>
+    <section class="section-frame xl:mx-6 xl:rounded-[1rem] lg:mx-6 lg:rounded-[1rem] md:mx-6 md:rounded-[1rem] xxl:!mx-12 overflow-hidden">
+        <div class="swiper-container swiper-hero-container swiper-fullscreen nav-dark relative z-10" 
+             data-margin="0" 
+             data-autoplay="true" 
+             data-autoplaytime="7000" 
+             data-nav="true" 
+             data-dots="false" 
+             data-items="1" 
+             data-thumbs="{{ $banners->count() > 1 ? 'true' : 'false' }}">
             
-          <!--/.swiper-wrapper -->
-        </div>
-        <a href="{{ route('contact') }}" class="btn btn-yellow text-white !bg-[#fab758] border-[#fab758] hover:text-white hover:bg-[#fab758] hover:border-[#fab758] focus:shadow-[rgba(250,183,88,0.5)] active:text-white active:bg-[#fab758] active:border-[#fab758] disabled:text-white disabled:bg-[#fab758] disabled:border-[#fab758] !rounded-[50rem] !mb-3 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)] animate__animated animate__fadeInUp animate__delay-3s">
-                            Contact Us Today
-                        </a>
-        <!-- /.swiper -->
-        <div class="swiper-static">
-          <div class="container !h-full flex items-center justify-center">
-            <div class="flex flex-wrap mx-[-15px]">
-            <div class="lg:w-8/12 xl:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto mt-[-2.5rem] !text-center">
-            
+            <!-- Main Hero Swiper -->
+            <div class="swiper swiper-hero">
+                <div class="swiper-wrapper">
+                    @forelse($banners as $banner)
+                        <div class="swiper-slide bg-image bg-overlay bg-overlay-400 relative z-0 !bg-cover !bg-[center_center] before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.4)]" 
+                             data-image-src="{{ $banner->getHeroImageUrl() }}">
+                            
+                            <!-- Hero Content dari Database -->
+                            <div class="container !h-full flex items-center justify-center relative z-[2]">
+                                <div class="flex flex-wrap mx-[-15px] !h-full items-center">
+                                    <div class="lg:w-10/12 xl:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !text-center">
+                                        
+                                        <!-- Title dari Database -->
+                                        <h1 class="display-1 fs-56 mb-4 text-white xl:text-[3.5rem] text-[calc(1.425rem_+_2.1vw)] !leading-[1.2] font-bold animate__animated animate__fadeInUp animate__delay-1s">
+                                            {{ $banner->getDisplayTitle() }}
+                                        </h1>
+                                        
+                                        <!-- Description dari Database -->
+                                        @if($banner->description)
+                                            <p class="lead text-[1.2rem] !leading-[1.6] font-medium mb-7 text-white animate__animated animate__fadeInUp animate__delay-2s">
+                                                {{ $banner->getDisplayDescription() }}
+                                            </p>
+                                        @endif
+                                        
+                                        <!-- Button dari Database -->
+                                        @if($banner->hasClickUrl())
+                                            <div class="animate__animated animate__fadeInUp animate__delay-3s">
+                                                <a href="{{ $banner->click_url }}" 
+                                                   target="{{ $banner->getClickTarget() }}"
+                                                   @if($banner->getClickTarget() === '_blank') rel="noopener noreferrer" @endif
+                                                   class="btn btn-lg btn-yellow text-white !bg-[#fab758] border-[#fab758] hover:text-white hover:bg-[#fab758] hover:border-[#fab758] focus:shadow-[rgba(250,183,88,0.5)] active:text-white active:bg-[#fab758] active:border-[#fab758] disabled:text-white disabled:bg-[#fab758] disabled:border-[#fab758] !rounded-[50rem] !mb-0 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
+                                                    {{ $banner->getButtonText() }}
+                                                </a>
+                                            </div>
+                                        @else
+                                            <!-- Default button jika tidak ada click_url -->
+                                            <div class="animate__animated animate__fadeInUp animate__delay-3s">
+                                                <a href="{{ route('contact') }}" 
+                                                   class="btn btn-lg btn-yellow text-white !bg-[#fab758] border-[#fab758] hover:text-white hover:bg-[#fab758] hover:border-[#fab758] focus:shadow-[rgba(250,183,88,0.5)] active:text-white active:bg-[#fab758] active:border-[#fab758] disabled:text-white disabled:bg-[#fab758] disabled:border-[#fab758] !rounded-[50rem] !mb-0 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
+                                                    Contact Us Today
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <!-- Default slide jika tidak ada banner di database -->
+                        <div class="swiper-slide bg-image bg-overlay bg-overlay-400 relative z-0 !bg-cover !bg-[center_center] before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(30,34,40,.4)]" 
+                             data-image-src="{{ asset('assets/img/photos/bg28.jpg') }}">
+                            <div class="container !h-full flex items-center justify-center relative z-[2]">
+                                <div class="flex flex-wrap mx-[-15px] !h-full items-center">
+                                    <div class="lg:w-10/12 xl:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !text-center">
+                                        <h1 class="display-1 fs-56 mb-4 text-white xl:text-[3.5rem] text-[calc(1.425rem_+_2.1vw)] !leading-[1.2] font-bold animate__animated animate__fadeInUp animate__delay-1s">
+                                            Welcome to Our Website
+                                        </h1>
+                                        <p class="lead text-[1.2rem] !leading-[1.6] font-medium mb-7 text-white animate__animated animate__fadeInUp animate__delay-2s">
+                                            Discover our amazing products and services that will transform your business.
+                                        </p>
+                                        <div class="animate__animated animate__fadeInUp animate__delay-3s">
+                                            <a href="{{ route('products') }}" 
+                                               class="btn btn-lg btn-yellow text-white !bg-[#fab758] border-[#fab758] hover:text-white hover:bg-[#fab758] hover:border-[#fab758] focus:shadow-[rgba(250,183,88,0.5)] active:text-white active:bg-[#fab758] active:border-[#fab758] disabled:text-white disabled:bg-[#fab758] disabled:border-[#fab758] !rounded-[50rem] !mb-0 hover:translate-y-[-0.15rem] hover:shadow-[0_0.25rem_0.75rem_rgba(30,34,40,0.15)]">
+                                                Explore Products
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforelse
+                </div>
+                <!--/.swiper-wrapper -->
+            </div>
+            <!-- /.swiper -->
+
+            <!-- Thumbnail Navigation (hanya tampil jika ada multiple banners) -->
+            @if($banners->count() > 1)
+                <div class="swiper swiper-thumbs">
+                    <div class="swiper-wrapper">
+                        @foreach($banners as $banner)
+                            <div class="swiper-slide">
+                                <img src="{{ $banner->getThumbnailUrl() }}" 
+                                     class="rounded-[0.4rem] w-full h-20 object-cover" 
+                                     alt="{{ $banner->getDisplayTitle() }}"
+                                     loading="lazy">
+                            </div>
+                        @endforeach
                     </div>
-              <!-- /column -->
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.container -->
+                </div>
+            @endif
+
+            <!-- Navigation Arrows -->
+            @if($banners->count() > 1)
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            @endif
         </div>
-        <!-- /.swiper-static -->
-      </div>
-      <!-- /.swiper-container -->
+        <!-- /.swiper-container -->
     </section>
+    <!-- /hero section -->
+
+    <!-- Admin Preview Notification (hanya tampil untuk admin saat dev/testing) -->
+    @if(config('app.debug') && auth()->check() && auth()->user()->can('view_any_banner'))
+        <div class="bg-blue-50 border border-blue-200 p-4">
+            <div class="container">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-blue-800">
+                        <strong>Admin Preview:</strong> 
+                        Menampilkan {{ $banners->count() }} banner dari kategori 
+                        @if($banners->isNotEmpty())
+                            "{{ $banners->first()->category->name }}"
+                        @else
+                            "(tidak ada banner aktif)"
+                        @endif
+                    </div>
+                    <a href="{{ route('filament.admin.resources.banners.index') }}" 
+                       class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                        Kelola Banner →
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
     <!-- /section -->
 
     <!-- Categories Section -->
@@ -360,3 +437,177 @@
     </section>
     <!-- /section -->
 </div>
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Hero banner swiper initialization dengan data dari database
+    let heroThumbs = null;
+    
+    // Initialize thumbnails swiper jika ada multiple banners
+    if (document.querySelector('.swiper-thumbs') && {{ $banners->count() }} > 1) {
+        heroThumbs = new Swiper('.swiper-thumbs', {
+            slidesPerView: 4,
+            spaceBetween: 10,
+            freeMode: true,
+            watchSlidesProgress: true,
+            breakpoints: {
+                320: {
+                    slidesPerView: 2,
+                    spaceBetween: 5
+                },
+                480: {
+                    slidesPerView: 3,
+                    spaceBetween: 8
+                },
+                768: {
+                    slidesPerView: 4,
+                    spaceBetween: 10
+                }
+            }
+        });
+    }
+
+    // Initialize main hero swiper
+    const heroSwiper = new Swiper('.swiper-hero', {
+        loop: {{ $banners->count() > 1 ? 'true' : 'false' }},
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        },
+        autoplay: {{ $banners->count() > 1 ? '{delay: 7000, disableOnInteraction: false}' : 'false' }},
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+            swiper: heroThumbs
+        },
+        on: {
+            init: function() {
+                // Apply background images setelah swiper initialization
+                this.slides.forEach((slide, index) => {
+                    const imageSrc = slide.getAttribute('data-image-src');
+                    if (imageSrc) {
+                        slide.style.backgroundImage = `url('${imageSrc}')`;
+                    }
+                });
+            },
+            slideChange: function() {
+                // Track banner views (opsional untuk analytics)
+                const activeSlide = this.slides[this.activeIndex];
+                const bannerTitle = activeSlide.querySelector('h1')?.textContent;
+                console.log('Banner viewed:', bannerTitle);
+            }
+        }
+    });
+
+    // Error handling untuk gambar yang gagal load
+    document.querySelectorAll('.swiper-slide[data-image-src]').forEach(slide => {
+        const img = new Image();
+        const imageSrc = slide.getAttribute('data-image-src');
+        
+        img.onerror = function() {
+            // Fallback ke gambar default jika banner image gagal load
+            slide.style.backgroundImage = `url('{{ asset('assets/img/photos/bg28.jpg') }}')`;
+        };
+        
+        img.src = imageSrc;
+    });
+});
+</script>
+@endpush
+
+@push('styles')
+<style>
+/* Hero Banner Responsive Styles untuk sinkronisasi dengan backend */
+.swiper-hero-container {
+    height: 100vh;
+    min-height: 600px;
+}
+
+.swiper-hero .swiper-slide {
+    height: 100vh;
+    min-height: 600px;
+}
+
+/* Navigation arrows styling */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: -25px;
+    backdrop-filter: blur(10px);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 20px;
+}
+
+/* Thumbnail navigation */
+.swiper-thumbs {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    z-index: 10;
+}
+
+.swiper-thumbs .swiper-slide {
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.swiper-thumbs .swiper-slide-thumb-active {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .swiper-hero-container,
+    .swiper-hero .swiper-slide {
+        height: 70vh;
+        min-height: 500px;
+    }
+    
+    .swiper-thumbs {
+        width: 250px;
+    }
+    
+    .display-1 {
+        font-size: 2.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-hero-container,
+    .swiper-hero .swiper-slide {
+        height: 60vh;
+        min-height: 400px;
+    }
+    
+    .display-1 {
+        font-size: 2rem !important;
+    }
+    
+    .lead {
+        font-size: 1rem !important;
+    }
+}
+
+/* Animation optimizations */
+.animate__animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.animate__delay-1s { animation-delay: 0.5s; }
+.animate__delay-2s { animation-delay: 1s; }
+.animate__delay-3s { animation-delay: 1.5s; }
+</style>
+@endpush

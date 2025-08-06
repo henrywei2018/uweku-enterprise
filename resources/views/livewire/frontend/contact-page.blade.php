@@ -13,8 +13,9 @@
                         <div class="flex flex-wrap mx-0">
                             <div class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] max-w-full !self-stretch">
                                 <div class="map map-full rounded-t-[0.4rem] rounded-lg-start h-full min-h-[15rem]">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25387.23478654725!2d-122.06115399490332!3d37.309248660190086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb4571bd377ab%3A0x394d3fe1a3e178b4!2sCupertino%2C%20CA%2C%20USA!5e0!3m2!1sen!2str!4v1645437305701!5m2!1sen!2str" style="width:100%; height: 100%; border:0" allowfullscreen></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15939.767370096171!2d117.38564355657346!3d2.833077406393867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1754297844801!5m2!1sid!2sid" style="width:100%; height: 100%; border:0" allowfullscreen></iframe>
                                 </div>
+                                
                                 <!-- /.map -->
                             </div>
                             <!--/column -->
@@ -28,7 +29,7 @@
                                         </div>
                                         <div class="!self-start !justify-start">
                                             <h5 class="!mb-1">Address</h5>
-                                            <address class="not-italic leading-[inherit] mb-4">123 Export Street<br class="hidden xl:block lg:block md:block">Your City, Country</address>
+                                            <address class="not-italic leading-[inherit] mb-4">Jl. Jelarai Raya, Tj. Selor Hilir<br class="hidden xl:block lg:block md:block">Kabupaten Bulungan, Kalimantan Utara 77215</address>
                                         </div>
                                     </div>
                                     <!--/div -->
@@ -40,7 +41,7 @@
                                         </div>
                                         <div>
                                             <h5 class="!mb-1">E-mail</h5>
-                                            <p class="!mb-0"><a href="mailto:info@yourcompany.com" class="text-[#60697b]">info@yourcompany.com</a></p>
+                                            <p class="!mb-0"><a href="mailto:info@yourcompany.com" class="text-[#60697b]">ptuweindokuenterprize@gmail.com</a></p>
                                         </div>
                                     </div>
                                     <!--/div -->
